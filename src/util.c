@@ -99,7 +99,7 @@ char *get_udp_packet_ip(SOCK *s, void *addrinfo)
             inet_ntop(AF_INET, &(((struct sockaddr_in *)addrinfo)->sin_addr), name, INET_ADDRSTRLEN);
             break;
         case AF_INET6:
-            inet_ntop(AF_INET6, addrinfo, name, INET6_ADDRSTRLEN);
+            inet_ntop(AF_INET6, &(((struct sockaddr_in6 *)addrinfo)->sin6_addr), name, INET6_ADDRSTRLEN);
             break;
         default:
             free(name);
