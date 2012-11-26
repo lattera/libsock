@@ -12,26 +12,6 @@
 #include "sock.h"
 #include "util.h"
 
-void *xmalloc(size_t sz)
-{
-    void *p;
-
-    p = malloc(sz);
-    if ((p))
-        memset(p, 0x00, sz);
-
-    return p;
-}
-
-void xfree(void *p, size_t sz)
-{
-    if (!(p))
-        return;
-
-    memset(p, 0x00, sz);
-    free(p);
-}
-
 SOCK *get_sock_client(const char *host, const char *port, int protocol)
 {
     SOCK *sock;
@@ -54,7 +34,7 @@ SOCK *get_sock_client(const char *host, const char *port, int protocol)
     if (rv != 0)
         return NULL;
 
-    sock = xmalloc(sizeof(SOCK));
+    sock = calloc(1, sizeof(SOCK));
     sock->protocol = protocol;
 
     for (p = servinfo; p != NULL; p = p->ai_next) {
@@ -90,7 +70,7 @@ char *get_udp_packet_ip(SOCK *s, void *addrinfo)
 {
     char *name;
 
-    name = xmalloc(INET6_ADDRSTRLEN+1);
+    name = calloc(1, INET6_ADDRSTRLEN+1);
     if (!(name))
         return NULL;
 

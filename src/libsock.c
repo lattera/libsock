@@ -106,7 +106,7 @@ ssize_t udp_read(SOCK *sock, void *data, size_t sz)
     struct sockaddr *reply_addr=NULL;
     char *name=NULL;
 
-    reply_addr = xmalloc(sock->addrinfo->ai_addrlen);
+    reply_addr = calloc(1, sock->addrinfo->ai_addrlen);
     do {
         i = recvfrom(sock->sockfd, data, sz, 0, reply_addr, &len);
         if (i <= 0) {
