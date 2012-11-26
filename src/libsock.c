@@ -45,7 +45,7 @@ EXPORTED_SYM ssize_t SocketWrite(SOCK *sock, const void *data, size_t sz)
         case SOCK_TCP:
             do {
                 i = send(sock->sockfd, data+n, sz-n, 0);
-                if (i < 0 && (errno == EAGAIN || errno == EINTR))
+                if (i < 0 && (errno == EAGAIN))
                     continue;
                 if (i < 0)
                     return -1;
@@ -58,7 +58,7 @@ EXPORTED_SYM ssize_t SocketWrite(SOCK *sock, const void *data, size_t sz)
         case SOCK_UDP:
             do {
                 i = sendto(sock->sockfd, data, sz, 0, sock->addrinfo->ai_addr, sock->addrinfo->ai_addrlen);
-                if (i < 0 && (errno == EAGAIN || errno == EINTR))
+                if (i < 0 && (errno == EAGAIN))
                     continue;
                 if (i < 0)
                     return -1;
@@ -84,7 +84,7 @@ EXPORTED_SYM ssize_t SocketRead(SOCK *sock, void *data, size_t sz)
         case SOCK_TCP:
             do {
                 i = recv(sock->sockfd, data, sz, 0);
-                if (i <= 0 && (errno == EAGAIN || errno == EINTR))
+                if (i <= 0 && (errno == EAGAIN))
                     continue;
                 n = i;
             } while (n == 0);
@@ -110,7 +110,7 @@ ssize_t udp_read(SOCK *sock, void *data, size_t sz)
     do {
         i = recvfrom(sock->sockfd, data, sz, 0, reply_addr, &len);
         if (i <= 0) {
-            if (errno == EAGAIN || errno == EINTR) {
+            if (errno == EAGAIN) {
                 continue;
             } else {
                 free(reply_addr);
