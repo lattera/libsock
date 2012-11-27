@@ -27,7 +27,7 @@ typedef struct _sock {
 
 SOCK *SocketClient(const char *, const char *, int);
 ssize_t SocketWrite(SOCK *, const void *, size_t);
-ssize_t SockRead(SOCK *, void *, size_t);
+ssize_t SocketRead(SOCK *, void *, size_t);
 void SocketClose(SOCK *);
 ssize_t udp_read(SOCK *, void *, size_t);
 
